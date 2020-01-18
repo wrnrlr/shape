@@ -44,7 +44,7 @@ func (t Triangle) Stroke(rgba color.RGBA, width float32, gtx *layout.Context) (b
 	path.Line(p2)
 	path.Line(p3)
 	path.End().Add(gtx.Ops)
-	paint.PaintOp{box}.Add(gtx.Ops)
+	paint.PaintOp{bbox}.Add(gtx.Ops)
 	stack.Pop()
 	return bbox
 }
