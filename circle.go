@@ -48,7 +48,6 @@ func (cc Circle) Stroke(col color.RGBA, lineWidth float32, gtx *layout.Context) 
 	path.Cube(f32.Point{X: 0, Y: -r * c}, f32.Point{X: -(r - r*c), Y: -r}, f32.Point{X: -r, Y: -r}) // NE
 	path.Cube(f32.Point{X: -r * c, Y: 0}, f32.Point{X: -r, Y: r - r*c}, f32.Point{X: -r, Y: r})     // NW
 	path.End().Add(gtx.Ops)
-	path.End().Add(gtx.Ops)
 	//paint.PaintOp{f32.Rectangle{Max:f32.Point{w,h}}}.Add(gtx.Ops)
 	paint.PaintOp{box}.Add(gtx.Ops)
 	stack.Pop()
