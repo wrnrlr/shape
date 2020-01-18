@@ -3,7 +3,6 @@ package shape
 import (
 	"gioui.org/f32"
 	"gioui.org/layout"
-	"gioui.org/op"
 	"gioui.org/op/clip"
 )
 
@@ -61,12 +60,4 @@ func (cc Circle) Fill(gtx *layout.Context) f32.Rectangle {
 	path.End().Add(gtx.Ops)
 	box := f32.Rectangle{Min: f32.Point{X: p.X - r, Y: p.Y - r}, Max: f32.Point{X: p.X + r, Y: p.Y + r}}
 	return box
-}
-
-func StrokeCircle(p f32.Point, r, lineWidth float32, ops *op.Ops) {
-
-}
-
-func FillCircle(p f32.Point, r float32, ops *op.Ops) {
-
 }

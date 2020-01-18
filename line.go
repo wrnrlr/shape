@@ -6,7 +6,6 @@ import (
 	"gioui.org/layout"
 	"gioui.org/op/clip"
 	"gioui.org/unit"
-	"github.com/wrnrlr/foxtrot/util"
 	"math"
 )
 
@@ -94,10 +93,10 @@ func (l Line) Stroke(width unit.Value, gtx *layout.Context) (box f32.Rectangle) 
 	printDegrees(angles)
 	fmt.Printf("Offset Points:   %v\n", offsetPoints)
 	for _, p := range offsetPoints {
-		box.Min.X = util.Min(box.Min.X, p.X)
-		box.Min.Y = util.Min(box.Min.Y, p.Y)
-		box.Max.X = util.Max(box.Max.X, p.X)
-		box.Max.Y = util.Max(box.Max.Y, p.Y)
+		box.Min.X = Min(box.Min.X, p.X)
+		box.Min.Y = Min(box.Min.Y, p.Y)
+		box.Max.X = Max(box.Max.X, p.X)
+		box.Max.Y = Max(box.Max.Y, p.Y)
 	}
 	fmt.Printf("Min and Max:   %v\n", box)
 	fmt.Printf("Delta Points:    %v\n", deltaPoints)
