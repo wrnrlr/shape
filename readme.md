@@ -4,42 +4,39 @@ A library for drawing common shapes like: line, circle, rectangle and more.
 
 ## Line
 ```
-shape.Line{a,b,...}.Stroke(width, gtx)
+shape.Line{a,b,...}.Stroke(color, width, gtx)
 ```
 
 ## Circle
 ```
-shape.Circle{c,r}.Stroke(width, gtx)
-shape.Circle{c,r}.Fill(gtx)
+shape.Circle{c,r}.Stroke(color, width, gtx)
+shape.Circle{c,r}.Fill(color, gtx)
 ```
 
 ## Rectangle
 ```
-shape.Rectangle{a,b}.Stroke(width, gtx)
-shape.Rectangle{c,r}.Fill(gtx)
+shape.Rectangle{a,b}.Stroke(color, width, gtx)
+shape.Rectangle{c,r}.Fill(color, gtx)
 ```
 
 ## Triangle
 ```
-shape.Triangle{c,r}.Stroke(width, gtx)
-shape.Triangle{c,r}.Fill(gtx)
+shape.Triangle{c,r}.Stroke(color, width, gtx)
+shape.Triangle{c,r}.Fill(color, gtx)
 ```
 
 ## Curve
 ```
-shape.Curve{a,b,...}.Stroke(width,gtx)
+shape.Curve{a,b,...}.Stroke(color, width,gtx)
 ```
 
 ## Example Draw Red Line 
 ```go
 func drawLine(gtx *layout.Context) {
-    var stack op.StackOp
-    stack.Push(gtx.Ops)
-    line := shape.Line{{0, merginTop}, {lineLen, merginTop}}
-    box := line.Stroke(width, shape.Solid, gtx)
-    paint.ColorOp{color.RGBA{255,0,0,255}}.Add(gtx.Ops)
-    paint.PaintOp{box}.Add(gtx.Ops)
-    stack.Pop()
+    red := color.RGBA{255,0,0,255}
+    s := gtx.Constraints
+    w, h := float32(s.Width.Max), float32(s.Height.Max)
+    shape.Line{{0,h/2},{w,h/2}}.Stroke(red, width, gtx)
 }
 ```
 
