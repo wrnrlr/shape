@@ -16,13 +16,13 @@ shape.Circle{c,r}.Fill(color, gtx)
 ## Rectangle
 ```
 shape.Rectangle{a,b}.Stroke(color, width, gtx)
-shape.Rectangle{c,r}.Fill(color, gtx)
+shape.Rectangle{a,b}.Fill(color, gtx)
 ```
 
 ## Triangle
 ```
-shape.Triangle{c,r}.Stroke(color, width, gtx)
-shape.Triangle{c,r}.Fill(color, gtx)
+shape.Triangle{a,b,c}.Stroke(color, width, gtx)
+shape.Triangle{a,b,c}.Fill(color, gtx)
 ```
 
 ## Curve
