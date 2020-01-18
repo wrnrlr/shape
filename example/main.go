@@ -60,12 +60,12 @@ func painting(gtx *layout.Context) {
 	c1.Stroke(grey, width, gtx)
 
 	a, b = f32.Point{w / 2, 0}, f32.Point{w / 2, h}
-	r1 := shape.Rectangle{c, r}
+	r1 := shape.Rectangle{a, b}
 	r1.Fill(grey, gtx)
 	r1.Stroke(grey, width, gtx)
 
 	a, b = f32.Point{w / 2, 0}, f32.Point{w / 2, h}
-	shape.Rectangle{c, r}.Fill(grey, gtx)
+	shape.Rectangle{a, b}.Fill(grey, gtx)
 
 	//stack.Push(gtx.Ops)
 	//a = f32.Point{w/2, 0}
