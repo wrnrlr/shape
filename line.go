@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"gioui.org/f32"
 	"gioui.org/layout"
+	"gioui.org/op"
 	"gioui.org/op/clip"
-	"gioui.org/unit"
+	"gioui.org/op/paint"
+	"image/color"
 	"math"
 )
 
@@ -20,13 +22,16 @@ const (
 
 type Line []f32.Point
 
-func (l Line) Stroke(width unit.Value, gtx *layout.Context) (box f32.Rectangle) {
+func (l Line) Stroke(c color.RGBA, width float32, gtx *layout.Context) (box f32.Rectangle) {
 	if len(l) < 2 {
 		return box
 	}
+	var stack op.StackOp
+	stack.Push(gtx.Ops)
+	paint.ColorOp{c}.Add(gtx.Ops)
 	var path clip.Path
 	path.Begin(gtx.Ops)
-	distance := float32(gtx.Px(width))
+	distance := width
 	var angles []float32
 	var offsetPoints, originalPoints, deltaPoints []f32.Point
 	var tilt float32
@@ -101,5 +106,8 @@ func (l Line) Stroke(width unit.Value, gtx *layout.Context) (box f32.Rectangle) 
 	fmt.Printf("Min and Max:   %v\n", box)
 	fmt.Printf("Delta Points:    %v\n", deltaPoints)
 	path.End().Add(gtx.Ops)
+	//paint.PaintOp{f32.Rectangle{Max:f32.Point{w,h}}}.Add(gtx.Ops)
+	paint.PaintOp{box}.Add(gtx.Ops)
+	stack.Pop()
 	return box
 }
