@@ -3,7 +3,6 @@ package shape
 import (
 	"fmt"
 	"gioui.org/f32"
-	"github.com/wrnrlr/foxtrot/util"
 	"math"
 )
 
@@ -138,9 +137,29 @@ func Overlay(rs ...f32.Rectangle) f32.Rectangle {
 	rr := rs[0]
 	for _, r := range rs[1:] {
 		rr = f32.Rectangle{
-			Min: f32.Point{util.Min(rr.Min.Y, r.Min.Y), util.Min(rr.Min.Y, r.Min.Y)},
-			Max: f32.Point{util.Max(rr.Max.Y, r.Max.Y), util.Max(rr.Max.Y, r.Max.Y)},
+			Min: f32.Point{Min(rr.Min.Y, r.Min.Y), Min(rr.Min.Y, r.Min.Y)},
+			Max: f32.Point{Max(rr.Max.Y, r.Max.Y), Max(rr.Max.Y, r.Max.Y)},
 		}
 	}
 	return rr
+}
+
+func Min(x, y float32) float32 {
+	return float32(math.Min(float64(x), float64(y)))
+}
+
+func Max(x, y float32) float32 {
+	return float32(math.Max(float64(x), float64(y)))
+}
+
+func Inf(sign int) float32 {
+	return float32(math.Inf(sign))
+}
+
+func IsNaN(sign float32) bool {
+	return math.IsNaN(float64(sign))
+}
+
+func IsInf(f float32, sign int) bool {
+	return math.IsInf(float64(f), sign)
 }
