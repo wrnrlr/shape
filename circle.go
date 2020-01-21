@@ -16,14 +16,12 @@ type Circle struct {
 	Radius float32
 }
 
-func (cc Circle) Stroke(col color.RGBA, lineWidth float32, gtx *layout.Context) f32.Rectangle {
-	scale := lineWidth // base value on lineWidth and r
-
+func (cc Circle) Stroke(col color.RGBA, width float32, gtx *layout.Context) f32.Rectangle {
 	r := cc.Radius
+	//scale := width // base value on lineWidth and r
 	w, h := r*2, r*2
 	p := cc.Center
-	box := f32.Rectangle{Min: f32.Point{X: p.X - r, Y: p.Y - r}, Max: f32.Point{X: p.X + r, Y: p.Y + r}}
-
+	box := f32.Rectangle{Max: f32.Point{X: p.X + w, Y: p.Y + h}}
 	var stack op.StackOp
 	stack.Push(gtx.Ops)
 	paint.ColorOp{col}.Add(gtx.Ops)
@@ -38,6 +36,7 @@ func (cc Circle) Stroke(col color.RGBA, lineWidth float32, gtx *layout.Context) 
 	path.Cube(f32.Point{X: r * c, Y: 0}, f32.Point{X: r, Y: r - r*c}, f32.Point{X: r, Y: r})      // NE
 	// Return to origin
 	path.Move(f32.Point{X: -w, Y: -r})
+	scale := (r - width*2) / r
 	path.Move(f32.Point{X: w * (1 - scale) * .5, Y: h * (1 - scale) * .5})
 	w *= scale
 	h *= scale

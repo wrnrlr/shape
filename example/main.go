@@ -12,9 +12,9 @@ import (
 )
 
 var (
-	red   = color.RGBA{255, 0, 0, 255}
-	green = color.RGBA{0, 255, 0, 255}
-	blue  = color.RGBA{0, 0, 255, 255}
+	red   = color.RGBA{255, 0, 0, 125}
+	green = color.RGBA{0, 255, 0, 125}
+	blue  = color.RGBA{0, 0, 255, 125}
 	black = color.RGBA{0, 0, 0, 255}
 	grey  = color.RGBA{125, 125, 125, 125}
 )
@@ -43,29 +43,43 @@ func painting(gtx *layout.Context) {
 	//defaultWidth := float32(gtx.Px(unit.Sp(2)))
 
 	width := float32(gtx.Px(unit.Sp(10)))
+	thin := float32(gtx.Px(unit.Sp(1)))
+	light := float32(gtx.Px(unit.Sp(2)))
 
-	var a, b, c f32.Point
+	var a, b f32.Point
 
 	w, h := float32(gtx.Constraints.Width.Max), float32(gtx.Constraints.Height.Max)
 
-	a, b = f32.Point{0, h / 2}, f32.Point{w, h / 2}
-	shape.Line{a, b}.Stroke(grey, width, gtx)
-	a, b = f32.Point{w / 2, 0}, f32.Point{w / 2, h}
-	shape.Line{a, b}.Stroke(grey, width, gtx)
+	//a, b = f32.Point{0, h / 2}, f32.Point{w, h / 2}
+	//shape.Line{a, b}.Stroke(grey, width, gtx)
+	//a, b = f32.Point{w / 2, 0}, f32.Point{w / 2, h}
+	//shape.Line{a, b}.Stroke(grey, width, gtx)
 
-	c = f32.Point{w / 2, h / 2}
-	r := shape.Min(w, h) / 3
-	c1 := shape.Circle{c, r}
-	c1.Fill(grey, gtx)
-	c1.Stroke(grey, width, gtx)
+	//c = f32.Point{w / 2, h / 2}
+	//r := shape.Min(w, h) / 3
+	//c1 := shape.Circle{c, r}
+	//c1.Fill(grey, gtx)
+	//c1.Stroke(grey, width, gtx)
 
 	a, b = f32.Point{w / 2, 0}, f32.Point{w / 2, h}
 	r1 := shape.Rectangle{a, b}
 	r1.Fill(grey, gtx)
 	r1.Stroke(grey, width, gtx)
 
-	a, b = f32.Point{w / 2, 0}, f32.Point{w / 2, h}
-	shape.Rectangle{a, b}.Fill(grey, gtx)
+	//a, b = f32.Point{w / 2, 0}, f32.Point{w / 2, h}
+	//shape.Rectangle{a, b}.Fill(grey, gtx)
+
+	a, b = f32.Point{10, 10}, f32.Point{110, 110}
+	shape.Line{a, b}.Stroke(red, thin, gtx)
+
+	a, b = f32.Point{10, 20}, f32.Point{210, 220}
+	shape.Line{a, b}.Stroke(red, light, gtx)
+
+	//a = f32.Point{500, 500}
+	//shape.Circle{a, 100}.Fill(red, gtx)
+
+	a = f32.Point{500, 500}
+	shape.Circle{a, 100}.Stroke(red, thin, gtx)
 
 	//stack.Push(gtx.Ops)
 	//a = f32.Point{w/2, 0}
