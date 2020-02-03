@@ -26,3 +26,9 @@ const (
 	Dotted
 	Dashed
 )
+
+// stroke := shape.Stroke{red}
+// fill := shape.Solid{red}
+// shape.Rectangle{a,b}.Layout(gtx, stroke, fill)
+//
+// shape.Label{"Hello"}.Layout(gtx, stroke, fill)

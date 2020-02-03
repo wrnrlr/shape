@@ -1,7 +1,6 @@
 package shape
 
 import (
-	"fmt"
 	"gioui.org/f32"
 	"gioui.org/layout"
 	"gioui.org/op"
@@ -18,6 +17,7 @@ const (
 	rad225 = float32(225 * math.Pi / 180)
 	rad90  = float32(90 * math.Pi / 180)
 	rad180 = float32(180 * math.Pi / 180)
+	rad360 = float32(360 * math.Pi / 180)
 )
 
 type Line []f32.Point
@@ -37,6 +37,7 @@ func (l Line) Stroke(c color.RGBA, width float32, gtx *layout.Context) (box f32.
 	var tilt float32
 	var prevDelta f32.Point
 	for i, point := range l {
+		distance := width
 		if i == 0 {
 			nextPoint := l[i+1]
 			tilt = angle(point, nextPoint) + rad225
@@ -46,9 +47,9 @@ func (l Line) Stroke(c color.RGBA, width float32, gtx *layout.Context) (box f32.
 		} else {
 			prevPoint := l[i-1]
 			nextPoint := l[i+1]
-			tilt = bezel(point, prevPoint, nextPoint)
+			tilt = bezel(point, prevPoint, nextPoint, false)
+			angles = append(angles, tilt)
 		}
-		angles = append(angles, tilt)
 		originalPoints = append(originalPoints, point)
 		point = offsetPoint(point, distance, tilt)
 		offsetPoints = append(offsetPoints, point)
@@ -73,9 +74,9 @@ func (l Line) Stroke(c color.RGBA, width float32, gtx *layout.Context) (box f32.
 			point := l[i]
 			prevPoint := l[i-1]
 			nextPoint := l[i+1]
-			tilt = bezel(point, nextPoint, prevPoint)
+			tilt = bezel(point, nextPoint, prevPoint, true)
+			angles = append(angles, tilt)
 		}
-		angles = append(angles, tilt)
 		originalPoints = append(originalPoints, point)
 		point = offsetPoint(point, distance, tilt)
 		offsetPoints = append(offsetPoints, point)
@@ -87,24 +88,24 @@ func (l Line) Stroke(c color.RGBA, width float32, gtx *layout.Context) (box f32.
 	point := l[0]
 	nextPoint := l[1]
 	tilt = angle(point, nextPoint) + rad225
-	angles = append(angles, tilt)
+	//angles = append(angles, tilt)
 	originalPoints = append(originalPoints, point)
 	point = offsetPoint(point, distance, tilt)
 	offsetPoints = append(offsetPoints, point)
 	point = point.Sub(prevDelta)
 	path.Line(point)
 	deltaPoints = append(deltaPoints, point)
-	fmt.Printf("Original Points: %v\n", originalPoints)
+	//fmt.Printf("Original Points: %v\n", originalPoints)
 	printDegrees(angles)
-	fmt.Printf("Offset Points:   %v\n", offsetPoints)
+	//fmt.Printf("Offset Points:   %v\n", offsetPoints)
 	for _, p := range offsetPoints {
 		box.Min.X = Min(box.Min.X, p.X)
 		box.Min.Y = Min(box.Min.Y, p.Y)
 		box.Max.X = Max(box.Max.X, p.X)
 		box.Max.Y = Max(box.Max.Y, p.Y)
 	}
-	fmt.Printf("Min and Max:   %v\n", box)
-	fmt.Printf("Delta Points:    %v\n", deltaPoints)
+	//fmt.Printf("Min and Max:   %v\n", box)
+	//fmt.Printf("Delta Points:    %v\n", deltaPoints)
 	path.End().Add(gtx.Ops)
 	//paint.PaintOp{f32.Rectangle{Max:f32.Point{w,h}}}.Add(gtx.Ops)
 	paint.PaintOp{box}.Add(gtx.Ops)

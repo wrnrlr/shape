@@ -1,6 +1,7 @@
 package shape
 
 import (
+	"fmt"
 	"gioui.org/f32"
 	"math"
 )
@@ -44,18 +45,41 @@ func across(p, q, r f32.Point) float32 {
 	return atan2(q.Y-p.Y, q.X-p.X) - atan2(r.Y-p.Y, r.X-p.X)
 }
 
-func bezel(p, q, r f32.Point) float32 {
+func bezel(p, q, r f32.Point, below bool) float32 {
 	angle := atan2(q.Y-p.Y, q.X-p.X) - atan2(r.Y-p.Y, r.X-p.X)
 	if angle < -rad180 || angle > rad180 { // concave
-
+		//fmt.Printf("Concave point\n")
 	} else { // convex
-
+		//fmt.Printf("Convex point\n")
 	}
-	if angle < 0 {
-		angle = angle
+	s1 := slope(q, p)
+	s2 := slope(p, r)
+	if s1 > 0 {
+		fmt.Printf("Slope 1: Down, ")
 	} else {
-		angle = angle
+		fmt.Printf("Slope 1: Up, ")
 	}
+	if s2 > 0 {
+		fmt.Printf("Slope 2: Down \n")
+	} else {
+		fmt.Printf("Slope 2: Up \n")
+	}
+	if angle > 0 && !below {
+		angle = angle * -1
+	} else if angle < 0 && below {
+		angle = angle * -1
+	}
+	//if angle < 0 {
+	//	angle = mod(angle + rad360, 360)
+	//} else {
+	//	angle = angle
+	//}
+	//if s1 >= 0 {
+	//	angle = angle * -1
+	//}
+	//if s2 < 0 {
+	//	angle = angle * -1
+	//}
 	return angle
 }
 

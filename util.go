@@ -32,7 +32,7 @@ func OffsetPoints(l Line, width float32) (offset []f32.Point) {
 		} else {
 			prevPoint := l[i-1]
 			nextPoint := l[i+1]
-			tilt = bezel(point, prevPoint, nextPoint)
+			tilt = bezel(point, prevPoint, nextPoint, false)
 		}
 		angles = append(angles, tilt)
 		originalPoints = append(originalPoints, point)
@@ -54,7 +54,7 @@ func OffsetPoints(l Line, width float32) (offset []f32.Point) {
 			point := l[i]
 			prevPoint := l[i-1]
 			nextPoint := l[i+1]
-			tilt = bezel(point, nextPoint, prevPoint)
+			tilt = bezel(point, nextPoint, prevPoint, true)
 		}
 		angles = append(angles, tilt)
 		originalPoints = append(originalPoints, point)

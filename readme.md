@@ -30,6 +30,11 @@ shape.Triangle{a,b,c}.Fill(color, gtx)
 shape.Curve{a,b,...}.Stroke(color, width,gtx)
 ```
 
+## Points
+```
+...
+```
+
 ## Example Draw Red Line 
 ```go
 func drawLine(gtx *layout.Context) {
