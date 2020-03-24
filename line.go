@@ -129,6 +129,6 @@ func (l Line) Stroke(c color.RGBA, width float32, gtx *layout.Context) (box f32.
 	//paint.PaintOp{f32.Rectangle{Max:f32.Point{w,h}}}.Add(gtx.Ops)
 	paint.PaintOp{box}.Add(gtx.Ops)
 	stack.Pop()
-	PaintPoints(offsetPoints[0:len(offsetPoints)/2], pointWidth, gtx)
+	//PaintPoints(offsetPoints[0:len(offsetPoints)/2], pointWidth, gtx)
 	return box
 }
