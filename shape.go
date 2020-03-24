@@ -21,12 +21,6 @@ type Fill interface {
 
 type StrokeType int
 
-const (
-	Solid StrokeType = iota
-	Dotted
-	Dashed
-)
-
 // stroke := shape.Stroke{red}
 // fill := shape.Solid{red}
 // shape.Rectangle{a,b}.Layout(gtx, stroke, fill)

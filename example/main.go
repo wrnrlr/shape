@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"gioui.org/app"
 	"gioui.org/f32"
 	"gioui.org/font/gofont"
@@ -51,37 +50,105 @@ func painting(gtx *layout.Context) {
 	//thick := float32(gtx.Px(unit.Sp(5)))
 	bold := float32(gtx.Px(unit.Sp(20)))
 
-	var a, b, c f32.Point
+	var a, b, c, d, e, f, g f32.Point
+	var l shape.Line
 
 	//w, h := float32(gtx.Constraints.Width.Max), float32(gtx.Constraints.Height.Max)
 
-	a, b = f32.Point{0, 100}, f32.Point{100, 0}
+	a = f32.Point{0, 100}
+	b = f32.Point{100, 0}
 	c = f32.Point{200, 100}
-	l2y := shape.Line{a, b, c}
-	l2y.Stroke(red, bold, gtx)
+	l = shape.Line{a, b, c}
+	l.Stroke(red, bold, gtx)
 
-	a, b = f32.Point{500, 100}, f32.Point{400, 0}
-	c = f32.Point{300, 100}
-	l1a := shape.Line{a, b, c}
-	l1a.Stroke(red, bold, gtx)
+	//a = f32.Point{500, 100}
+	//b = f32.Point{400, 0}
+	//c = f32.Point{300, 100}
+	//l1a := shape.Line{a, b, c}
+	//l1a.Stroke(red, bold, gtx)
 
-	a, b = f32.Point{600, 0}, f32.Point{700, 100}
+	a = f32.Point{600, 0}
+	b = f32.Point{700, 100}
 	c = f32.Point{800, 0}
 	l2x := shape.Line{a, b, c}
 	l2x.Stroke(red, bold, gtx)
 
-	a, b = f32.Point{1100, 0}, f32.Point{1000, 100}
-	c = f32.Point{900, 0}
-	l2b := shape.Line{a, b, c}
-	l2b.Stroke(red, bold, gtx)
+	//a = f32.Point{1100, 0}
+	//b = f32.Point{1000, 100}
+	//c = f32.Point{900, 0}
+	//l2b := shape.Line{a, b, c}
+	//l2b.Stroke(red, bold, gtx)
 
-	a, b = f32.Point{0, 200}, f32.Point{200, 200}
-	c = f32.Point{200, 300}
-	l2y = shape.Line{a, b, c}
-	l2y.Stroke(red, bold, gtx)
+	//a = f32.Point{0, 200}
+	//b = f32.Point{200, 200}
+	//c = f32.Point{200, 300}
+	//l = shape.Line{a, b, c}
+	//l.Stroke(red, bold, gtx)
+	//
+	//a = f32.Point{300, 200}
+	//b = f32.Point{500, 200}
+	//c = f32.Point{500, 300}
+	//l = shape.Line{a, b, c}
+	//l.Stroke(red, bold, gtx)
+	//
+	//a = f32.Point{600, 300}
+	//b = f32.Point{600, 200}
+	//c = f32.Point{800, 200}
+	//l = shape.Line{a, b, c}
+	//l.Stroke(red, bold, gtx)
+	//
+	//a = f32.Point{900, 200}
+	//b = f32.Point{900, 300}
+	//c = f32.Point{1100, 300}
+	//l = shape.Line{a, b, c}
+	//l.Stroke(red, bold, gtx)
+	//
+	//a = f32.Point{0, 400}
+	//b = f32.Point{100, 500}
+	//c = f32.Point{0, 600}
+	//l = shape.Line{a, b, c}
+	//l.Stroke(red, bold, gtx)
+	//
+	//a = f32.Point{200, 600}
+	//b = f32.Point{300, 500}
+	//c = f32.Point{200, 400}
+	//l = shape.Line{a, b, c}
+	//l.Stroke(red, bold, gtx)
+	//
+	//a = f32.Point{500, 400}
+	//b = f32.Point{400, 500}
+	//c = f32.Point{500, 600}
+	//l = shape.Line{a, b, c}
+	//l.Stroke(red, bold, gtx)
+	//
+	//a = f32.Point{700, 600}
+	//b = f32.Point{600, 500}
+	//c = f32.Point{700, 400}
+	//l = shape.Line{a, b, c}
+	//l.Stroke(red, bold, gtx)
 
-	//shape.PaintPoints(l2y, light, gtx)
-	//shape.PaintPoints(shape.OffsetPoints(l2y, bold), light, gtx)
+	//a = f32.Point{0, 500}
+	//b = f32.Point{100, 600}
+	//c = f32.Point{200, 500}
+	//d := f32.Point{300, 600}
+	//e := f32.Point{400, 500}
+	//f := f32.Point{500, 600}
+	//g := f32.Point{600, 500}
+	//l = shape.Line{a, b, c, d, e, f, g}
+	//l.Stroke(red, bold, gtx)
 
-	fmt.Println("=================================================")
+	a = f32.Point{0, 800}
+	b = f32.Point{100, 700}
+	c = f32.Point{200, 800}
+	d = f32.Point{300, 700}
+	e = f32.Point{400, 800}
+	f = f32.Point{500, 700}
+	g = f32.Point{600, 800}
+	l = shape.Line{a, b, c, d, e, f, g}
+	l.Stroke(red, bold, gtx)
+
+	//shape.PaintPoints(l, light, gtx)
+	//shape.PaintPoints(shape.OffsetPoints(l, bold), light, gtx)
+
+	//fmt.Println("=================================================")
 }

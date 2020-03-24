@@ -46,3 +46,7 @@ func drawLine(gtx *layout.Context) {
 ```
 
 See in example folder for gio application with more examples of shapes.
+
+## Read More
+
+* [Drawing Antialiased Lines with OpenGL](https://blog.mapbox.com/drawing-antialiased-lines-with-opengl-8766f34192dc)

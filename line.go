@@ -6,23 +6,41 @@ import (
 	"gioui.org/op"
 	"gioui.org/op/clip"
 	"gioui.org/op/paint"
+	"gioui.org/unit"
 	"image/color"
 	"math"
 )
 
 const (
 	rad45  = float32(45 * math.Pi / 180)
-	rad135 = float32(135 * math.Pi / 180)
-	rad315 = float32(315 * math.Pi / 180)
-	rad225 = float32(225 * math.Pi / 180)
 	rad90  = float32(90 * math.Pi / 180)
+	rad135 = float32(135 * math.Pi / 180)
 	rad180 = float32(180 * math.Pi / 180)
+	rad225 = float32(225 * math.Pi / 180)
+	rad270 = float32(270 * math.Pi / 180)
+	rad315 = float32(315 * math.Pi / 180)
 	rad360 = float32(360 * math.Pi / 180)
 )
 
 type Line []f32.Point
 
+// An algorithm for polylines outline construction
+// http://old.cescg.org/CESCG99/SKrivograd/
+//
+// https://www.codeproject.com/Articles/226569/Drawing-polylines-by-tessellation
+//
+// A Realistic 2D Drawing System
+// https://keithp.com/~keithp/talks/cairo2003.pdf
+//
+// https://stackoverflow.com/questions/5641769/how-to-draw-an-outline-around-any-line
+//
+// Drawing Lines is Hard
+// https://mattdesl.svbtle.com/drawing-lines-is-hard
+//
 func (l Line) Stroke(c color.RGBA, width float32, gtx *layout.Context) (box f32.Rectangle) {
+
+	pointWidth := float32(gtx.Px(unit.Sp(2)))
+
 	if len(l) < 2 {
 		return box
 	}
@@ -74,7 +92,8 @@ func (l Line) Stroke(c color.RGBA, width float32, gtx *layout.Context) (box f32.
 			point := l[i]
 			prevPoint := l[i-1]
 			nextPoint := l[i+1]
-			tilt = bezel(point, nextPoint, prevPoint, true)
+			//tilt = bezel(point, nextPoint, prevPoint, true)
+			tilt = bezel(point, prevPoint, nextPoint, true) + rad180
 			angles = append(angles, tilt)
 		}
 		originalPoints = append(originalPoints, point)
@@ -110,5 +129,6 @@ func (l Line) Stroke(c color.RGBA, width float32, gtx *layout.Context) (box f32.
 	//paint.PaintOp{f32.Rectangle{Max:f32.Point{w,h}}}.Add(gtx.Ops)
 	paint.PaintOp{box}.Add(gtx.Ops)
 	stack.Pop()
+	PaintPoints(offsetPoints[0:len(offsetPoints)/2], pointWidth, gtx)
 	return box
 }

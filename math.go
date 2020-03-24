@@ -1,7 +1,6 @@
 package shape
 
 import (
-	"fmt"
 	"gioui.org/f32"
 	"math"
 )
@@ -10,8 +9,18 @@ func slope(p1, p2 f32.Point) float32 {
 	return (p2.Y - p1.Y) / (p2.X - p1.X)
 }
 
+func slope2(p1, p2 f32.Point) float32 {
+	p1.Y *= -1
+	p2.Y *= -1
+	return (p2.Y - p1.Y) / (p2.X - p1.X)
+}
+
 func angle(p1, p2 f32.Point) float32 {
-	return float32(math.Atan2(float64(p2.Y-p1.Y), float64(p2.X-p1.X)))
+	return atan2(p2.Y-p1.Y, p2.X-p1.X)
+}
+
+func atan2(y, x float32) float32 {
+	return float32(math.Atan2(float64(y), float64(x)))
 }
 
 func cos(v float32) float32 {
@@ -40,59 +49,87 @@ func offsetPoint(point f32.Point, distance, angle float32) f32.Point {
 	return f32.Point{X: x, Y: y}
 }
 
-// Return angle in radian between the vectors pq and pr
-func across(p, q, r f32.Point) float32 {
-	return atan2(q.Y-p.Y, q.X-p.X) - atan2(r.Y-p.Y, r.X-p.X)
+type Vector struct {
+	a, b float32
 }
 
-func bezel(p, q, r f32.Point, below bool) float32 {
-	angle := atan2(q.Y-p.Y, q.X-p.X) - atan2(r.Y-p.Y, r.X-p.X)
-	if angle < -rad180 || angle > rad180 { // concave
-		//fmt.Printf("Concave point\n")
-	} else { // convex
-		//fmt.Printf("Convex point\n")
+func (v Vector) Normalize() Vector {
+	m := v.Magnitude()
+	return Vector{v.a / m, v.b / m}
+}
+
+func (v Vector) Magnitude() float32 {
+	return sqrt(pow2(v.a) + pow2(v.b))
+}
+
+//func ToUnitVector(v Vector) Vector {
+//
+//}
+
+func miter(p1, p2, p3 f32.Point) {
+
+}
+
+func pow2(f float32) float32 {
+	return float32(math.Pow(float64(f), 2))
+}
+
+func sqrt(f float32) float32 {
+	return float32(math.Sqrt(float64(f)))
+}
+
+// Return angle in radian between the vectors pq and pr
+//func across(p, q, r f32.Point) float32 {
+//	return atan2(q.Y-p.Y, q.X-p.X) - atan2(r.Y-p.Y, r.X-p.X)
+//}
+
+func bezel(p, r, q f32.Point, below bool) float32 {
+	angle := angle(q, p) - angle(r, p)
+	//if angle < 0 {
+	//	angle = 2*math.Pi + angle
+	//}
+	//if angle > rad180  && below {
+	//	angle -= rad180
+	//} else if angle < rad180 && !below {
+	//	angle += rad180
+	//}
+	//flip := float32(1)
+	//run1 := p.X - q.X
+	//rise1 := p.Y - q.Y
+	//if below {
+	//	flip = -1
+	//}
+	//s1 := rise1 / run1 * flip
+	//if s1 == 0 {
+	//	angle = angle + math.Pi + rad45
+	//}
+	//if s1 < 0  {
+	//	angle = angle + math.Pi
+	//}
+	//if s1 == 0 && below {
+	//	angle = angle + math.Pi + rad45
+	//} else if s1 < 0 && below {
+	//	angle = angle + math.Pi
+	//}
+	return angle
+}
+
+func slopes(p, q, r f32.Point, below bool) (float32, float32) {
+	if below {
+		q, r = r, q
 	}
+	//if q.X > p.X || q.Y > p.Y {
+	//	q, p = p, q
+	//}
 	s1 := slope(q, p)
 	s2 := slope(p, r)
-	if s1 > 0 {
-		fmt.Printf("Slope 1: Down, ")
-	} else {
-		fmt.Printf("Slope 1: Up, ")
-	}
-	if s2 > 0 {
-		fmt.Printf("Slope 2: Down \n")
-	} else {
-		fmt.Printf("Slope 2: Up \n")
-	}
-	if angle > 0 && !below {
-		angle = angle * -1
-	} else if angle < 0 && below {
-		angle = angle * -1
-	}
-	//if angle < 0 {
-	//	angle = mod(angle + rad360, 360)
-	//} else {
-	//	angle = angle
-	//}
-	//if s1 >= 0 {
-	//	angle = angle * -1
-	//}
-	//if s2 < 0 {
-	//	angle = angle * -1
-	//}
-	return angle
+	return s1, s2
 }
 
-func bezel2(p, q, r f32.Point) float32 {
-	angle := atan2(q.Y-p.Y, q.X-p.X) - atan2(r.Y-p.Y, r.X-p.X)
-	if angle < 0 {
-		angle = angle + 360
-	}
-	return angle
-}
-
-func atan2(y, x float32) float32 {
-	return float32(math.Atan2(float64(y), float64(x)))
+func metrict(p1, p2 f32.Point) (float32, float32) {
+	// Run && Rise
+	// Left-to-right, Ascending,
+	return p2.X - p1.X, p2.Y - p1.Y
 }
 
 func mod(x, y float32) float32 {

@@ -1,7 +1,6 @@
 package shape
 
 import (
-	"fmt"
 	"gioui.org/f32"
 	"gioui.org/layout"
 	"image/color"
@@ -79,13 +78,21 @@ func OffsetPoints(l Line, width float32) (offset []f32.Point) {
 func printDegrees(radials []float32) {
 	var degrees []float32
 	for _, a := range radials {
-		degrees = append(degrees, mod(a*180/math.Pi, 360))
+		degrees = append(degrees, toDegrees(a))
 	}
-	fmt.Printf("Angles: %v\n", degrees)
+	//fmt.Printf("Angles: %v\n", degrees)
+}
+
+func toDegrees(radial float32) float32 {
+	return mod(radial*180/math.Pi, 360)
 }
 
 func PaintPoints(ps []f32.Point, radius float32, gtx *layout.Context) {
 	for _, p := range ps {
 		Circle{p, radius}.Fill(black, gtx)
 	}
+}
+
+func PaintPoint(p f32.Point, radius float32, gtx *layout.Context) {
+	Circle{p, radius}.Fill(black, gtx)
 }
