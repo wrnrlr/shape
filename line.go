@@ -6,7 +6,6 @@ import (
 	"gioui.org/op"
 	"gioui.org/op/clip"
 	"gioui.org/op/paint"
-	"gioui.org/unit"
 	"image/color"
 	"math"
 )
@@ -39,7 +38,7 @@ type Line []f32.Point
 //
 func (l Line) Stroke(c color.RGBA, width float32, gtx *layout.Context) (box f32.Rectangle) {
 
-	pointWidth := float32(gtx.Px(unit.Sp(2)))
+	//pointWidth := float32(gtx.Px(unit.Sp(2)))
 
 	if len(l) < 2 {
 		return box
